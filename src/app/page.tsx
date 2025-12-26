@@ -1,9 +1,9 @@
 "use client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { nanoid } from "nanoid";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/eden";
-import { useRouter } from "next/navigation";
 
 const ANIMALS = [
   "cat",
@@ -51,11 +51,9 @@ export default function Home() {
     mutationFn: async () => {
       const res = await api.room.create.post();
 
-      console.log(res);
-
-      // if (res.status === 200) {
-      //   router.push(`/room/${res.data?.roomId}`);
-      // }
+      if (res.status === 200) {
+        router.push(`/room/${res.data?.roomId}`);
+      }
     },
   });
 
