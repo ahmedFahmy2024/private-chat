@@ -7,9 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "fix": "biome check --write"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.4.6",
+    "@tanstack/react-query": "^5.90.12",
+    "@upstash/redis": "^1.36.0",
+    "elysia": "^1.4.19",
+    "nanoid": "^5.1.6",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
