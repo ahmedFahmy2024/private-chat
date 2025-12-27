@@ -1,5 +1,8 @@
 "use client";
 
+import { useUsername } from "@/hooks/use-username";
+import { api } from "@/lib/eden";
+import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useRef, useState } from "react";
 
@@ -10,11 +13,24 @@ const formatTimeRemaining = (seconds: number) => {
 };
 
 export default function Room() {
-  const { roomId } = useParams();
+  const { roomId } = useParams<{ roomId: string }>();
   const [copyStatus, setCopyStatus] = useState("Copy");
   const [timeRemaining, setTimeRemaining] = useState<number | null>(121);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const { username } = useUsername();
+
+  const { mutate: sendMessage, isPending } = useMutation({
+    mutationFn: async ({ text }: { text: string }) => {
+      await api.messages.post(
+        {
+          sender: username,
+          text,
+        },
+        { query: { roomId } },
+      );
+    },
+  });
 
   const copyLink = () => {
     const url = window.location.href;
